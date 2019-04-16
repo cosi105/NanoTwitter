@@ -1,0 +1,23 @@
+<!doctype html>
+<body>
+
+<ol>
+  <% @cur_page.each do |num| %>
+    <%= num %>
+    <br>
+  <% end %>
+  
+  	<% if (@pagenum + 1) * 10 <  @total %>
+	<form action="/tweets" method="get">
+	<button name="pagenum" type="submit" value="<%= @pagenum + 1 %>">Next</button></p>
+	</form>
+	<% end %>
+
+	<% if @pagenum > 0 %>
+	<form action="/tweets" method="get">
+	<button name="pagenum" type="submit" value="<%= @pagenum - 1 %>">Back</button></p>
+	</form>
+	<% end %>
+</ol>
+
+</body>

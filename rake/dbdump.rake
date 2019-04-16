@@ -9,6 +9,7 @@ namespace :db do
   namespace :dump do
     desc 'Loads the database from a SQL dump file'
     task seed: ['db:drop', 'db:create', 'db:migrate'] do
+      require 'open-uri'
       puts 'Downloading SQL data...'
       sql_file = open(ENV['SQL_DUMP_URL'])
       puts 'Downloaded SQL data!'

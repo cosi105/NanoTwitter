@@ -15,9 +15,11 @@ gem 'rake'
 gem 'rb-readline'
 gem 'redis'
 gem 'sinatra'
+gem 'sinatra-activerecord' 
 gem 'sinatra-flash'
 gem 'simplecov'
 gem 'thin'
+
 
 group :development do
   gem 'pry-byebug'

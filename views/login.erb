@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="<%= url('/logged_out.css') %>">
+<div class="formcards-container">
+  <div class="formcard">
+    <form action="/login" method="post">
+      <input id="handle" maxlength="100" name="handle" type="text" placeholder="user handle">
+      <br/>
+      <input maxlength="25" name="password" type="password" placeholder="password">
+      <br/>
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+</div>
