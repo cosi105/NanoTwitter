@@ -1,0 +1,1 @@
+# Holds RabbitMQ-related helper functions

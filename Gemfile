@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'activesupport', '5.2.2'
+gem 'bunny'
 gem 'bcrypt'
 gem 'dotenv'
 gem 'faker'

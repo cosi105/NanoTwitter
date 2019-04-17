@@ -1,7 +1,6 @@
 require 'bundler'
 Bundler.require
 require 'redis'
-require 'json'
 require_relative 'version'
 Dir.glob('rake/*.rake').each { |r| load r }
 

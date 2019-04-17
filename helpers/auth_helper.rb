@@ -15,6 +15,7 @@ def register(params)
   else
     status 201 # Created
     user = User.create(name: name, handle: user_handle, password: password)
+    REDIS.set(user.handle, user.id)
     set_session_user(user)
   end
 end
