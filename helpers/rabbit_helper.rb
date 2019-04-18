@@ -3,7 +3,7 @@
 # Initialize RabbitMQ object & connection appropriate to
 # the current env (viz., local vs. prod)
 if Sinatra::Base.production?
-  # Determine what env variable(s) are needed in prod
+  rabbit = Bunny.new(ENV['CLOUDAMQP_URL'])
 else
   rabbit = Bunny.new(automatically_recover: false)
 end
