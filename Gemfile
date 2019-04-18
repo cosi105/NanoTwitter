@@ -19,7 +19,7 @@ gem 'sinatra'
 gem 'sinatra-activerecord' 
 gem 'sinatra-flash'
 gem 'simplecov'
-gem 'thin'
+gem 'puma'
 
 
 group :development do
