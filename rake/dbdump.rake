@@ -1,3 +1,9 @@
+def reset_id_count
+  ActiveRecord::Base.connection.tables.each do |t|
+    ActiveRecord::Base.connection.reset_pk_sequence!(t)
+  end
+end
+
 namespace :db do
   desc 'Creates a SQL dump file from the database'
   task :dump do
@@ -8,16 +14,16 @@ namespace :db do
 
   namespace :dump do
     desc 'Loads the database from a SQL dump file'
-    task seed: ['db:drop', 'db:create', 'db:migrate'] do
+    task seed: ['db:create', 'db:migrate'] do
       require 'open-uri'
+      ActiveRecord::Base.subclasses.each(&:delete_all)
+      reset_id_count
       puts 'Downloading SQL data...'
       sql_file = open(ENV['SQL_DUMP_URL'])
       puts 'Downloaded SQL data!'
       puts 'Loading seed database...'
       system "psql -f #{sql_file.path} #{ENV['PG_HOST']}"
-      ActiveRecord::Base.connection.tables.each do |t|
-        ActiveRecord::Base.connection.reset_pk_sequence!(t)
-      end
+      reset_id_count
       sql_file.close!
       puts 'Loaded seed database!'
     end
