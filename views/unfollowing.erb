@@ -3,7 +3,7 @@
 
   <% @others.each do |other| %>
   	<form action="/users/following" method="post">
-  	<p>Name: <%= other.name %><button name="name" type="submit" value="<%= other.name %>">Follow</button></p>
+  	<p>Name: <%= other.name %><button name="followee_handle" type="submit" value="<%= other.handle %>">Follow</button></p>
   	</form>
   	
   <% end %>

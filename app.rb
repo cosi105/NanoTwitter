@@ -4,6 +4,8 @@ require 'redis'
 require_relative 'version'
 Dir.glob('rake/*.rake').each { |r| load r }
 
+enable :sessions
+
 # Sets local env configurations if applicable
 unless Sinatra::Base.production?
   require 'dotenv'
@@ -17,5 +19,3 @@ end
 
 # Require all model, helper, & view files
 %w[models helpers routes].each { |dir| dir_require dir }
-
-# Dir["#{__dir__}/views/*.erb"].each { |file| require file }
