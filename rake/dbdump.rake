@@ -10,10 +10,6 @@ namespace :db do
     desc 'Loads the database from a SQL dump file'
     task seed: ['db:drop', 'db:create', 'db:migrate'] do
       require 'open-uri'
-      unless Sinatra::Base.production?
-        require 'dotenv'
-        Dotenv.load 'config/local_vars.env'
-      end
       puts 'Downloading SQL data...'
       sql_file = open(ENV['SQL_DUMP_URL'])
       puts 'Downloaded SQL data!'
