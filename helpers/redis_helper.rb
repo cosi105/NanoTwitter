@@ -21,8 +21,20 @@ REDIS = get_redis_object
 # Pre-caches a mapping of all user handles to user ids
 require_relative '../models/user'
 Thread.new do
+  i = 0
+  count = Tweet.count
   User.all.each do |user|
-    REDIS.set(user.handle, user.id)
+    REDIS.set("#{user.handle}:user_id", user.id)
+    user.tweets.each { |tweet| REDIS.lpush("#{user.handle}:tweet_ids", tweet.id) }
+    puts "Seeded user #{i+=1} of #{count}!"
   end
-  puts 'Seeded db!'
+  Tweet.all.each do |tweet|
+    words = tweet.body.split.map { |w| w.downcase }
+    words.each do |word|
+      word.chop! if word[word.length-1] == '!'
+      REDIS.lpush("#{word}", tweet.id)
+    end
+    puts "Seeded tweet #{i+=1} of #{count}!"
+  end
+  puts 'Seeded redis!'
 end

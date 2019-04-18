@@ -21,6 +21,7 @@ def register(params)
 end
 
 # Set session's user and return the user
+# Also triggers pre-caching
 def set_session_user(user)
   session[:user] = user
   user
