@@ -36,7 +36,7 @@ namespace :db do
       puts 'Loading seed database...'
       if Sinatra::Base.production?
         password, credentials = get_credentials
-        system "set PGPASSWORD=#{password}; psql -f #{credentials} #{sql_file.path}"
+        system "set PGPASSWORD=#{password}; psql #{credentials} -f  #{sql_file.path}"
       else
         system "psql -f #{sql_file.path}"
       end
