@@ -4,6 +4,18 @@ def reset_id_count
   end
 end
 
+def get_credentials
+  url = ENV['DATABASE_URL']
+  url.slice!(0..'postgres://'.length-1)
+  username = url.slice!(0..url.index(':')).slice(0..-2)
+  password = url.slice!(0..url.index('@')).slice(0..-2)
+  host = url.slice!(0..url.index(':')).slice(0..-2)
+  port = url.slice!(0..url.index('/')).slice(0..-2)
+  dbname = url
+
+  return password, "-h #{host} -p #{port} -d #{dbname} -U #{username}"
+end
+
 namespace :db do
   desc 'Creates a SQL dump file from the database'
   task :dump do
@@ -22,7 +34,12 @@ namespace :db do
       sql_file = open(ENV['SQL_DUMP_URL'])
       puts 'Downloaded SQL data!'
       puts 'Loading seed database...'
-      system "psql -f #{sql_file.path} #{ENV['PG_HOST']}"
+      if Sinatra::Base.production?
+        password, credentials = get_credentials
+        system "set PGPASSWORD=#{password}; psql -f #{credentials} #{sql_file.path}"
+      else
+        system "psql -f #{sql_file.path}"
+      end
       reset_id_count
       sql_file.close!
       puts 'Loaded seed database!'
