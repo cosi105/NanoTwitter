@@ -2,7 +2,7 @@ require 'bundler'
 Bundler.require
 require 'sinatra/activerecord/rake'
 require 'rake/testtask'
-Dir.glob('rake/*.rake').each { |r| load r }
+require './app'
 
 Rake::TestTask.new do |t|
   t.deps = ['db:test:prepare']
