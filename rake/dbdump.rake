@@ -5,7 +5,7 @@ def reset_id_count
 end
 
 def get_credentials
-  url = ENV['DATABASE_URL']
+  url = ENV['DATABASE_URL'].dup
   url.slice!(0..'postgres://'.length-1)
   username = url.slice!(0..url.index(':')).slice(0..-2)
   password = url.slice!(0..url.index('@')).slice(0..-2)
