@@ -53,17 +53,26 @@ def publish(queue, payload)
   RABBIT_EXCHANGE.publish(payload, routing_key: queue.name)
 end
 
-# # Publishes JSON payloads to seed queues for microservices
-# def publish_seeds
-#   # Follows
-#   follow_data_seed = channel.queue('follow.data.seed')
-#   follows = Follows.all.map {|f| f.}
+# Publishes JSON payloads to seed queues for microservices
+def publish_seeds
+  # Follows
+  follow_data_seed = channel.queue('follow.data.seed')
+  follows_data_payload = []
+  Follow.all.each do |f|
+    follows_data_payload << {
+      follower_id: f.follower_id,
+      follower_handle: f.follower_handle,
+      followee_id: f.followee_id,
+      followee_handle: f.followee_handle
+    }
+  end
+  publish(follow_data_seed, follows_data_payload.to_json)
 
-#   # Tweets
-#   searcher_seed = channel.queue('searcher.seed')
-#   tweet_html_router_seed = channel.queue('tweet.html.router.seed')
+  # Tweets
+  searcher_seed = channel.queue('searcher.seed')
+  tweet_html_router_seed = channel.queue('tweet.html.router.seed')
   
-#   # Timeline Pieces
-#   timeline_data_seed = channel.queue('timeline.data.seed')
-#   timeline_html_seed = channel.queue('timeline.html.seed')
-# end
+  # Timeline Pieces
+  timeline_data_seed = channel.queue('timeline.data.seed')
+  timeline_html_seed = channel.queue('timeline.html.seed')
+end
