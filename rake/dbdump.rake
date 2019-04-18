@@ -14,7 +14,7 @@ namespace :db do
 
   namespace :dump do
     desc 'Loads the database from a SQL dump file'
-    task seed: ['db:create', 'db:migrate'] do
+    task seed: ['db:migrate'] do
       require 'open-uri'
       ActiveRecord::Base.subclasses.each(&:delete_all)
       reset_id_count
