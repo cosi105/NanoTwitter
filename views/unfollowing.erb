@@ -1,0 +1,9 @@
+<h1>You Can Follow The User You Want</h1>
+
+
+  <% @others.each do |other| %>
+  	<form action="/users/following" method="post">
+  	<p>Name: <%= other.name %><button name="name" type="submit" value="<%= other.name %>">Follow</button></p>
+  	</form>
+  	
+  <% end %>

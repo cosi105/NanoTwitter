@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="<%= url('/main.css') %>">
+  <script src="<%= url('/index.js') %>"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+<body>
+  <div class="page-container">
+    <div class="top-nav">
+      <div class="app-name nav-btn">
+        nanoTwitter
+      </div>
+      <i class="fas fa-feather nav-btn" id="new-tweet"></i>
+      <%# <img src="feather.svg" class="fas fa-feather nav-btn" id="new-tweet" /> %>
+    </div>
+    <div class="side-nav">
+      <a href="/users/profile">
+        <div class="side-nav-item">
+          Profile
+        </div>
+      </a>
+      <a href="/tweets">
+        <div class="side-nav-item">
+          Timeline
+        </div>
+      </a>
+      <a href="/users/followers">
+        <div class="side-nav-item">
+          Followers
+        </div>
+      </a>
+      <a href="/users/following">
+        <div class="side-nav-item">
+          Following
+        </div>
+      </a>
+      <a href="">
+        <div class="side-nav-item">
+          Mentions
+        </div>
+      </a>
+    </div>
+    <div class="main-container">
+      <%= yield %>
+    </div>
+  </div>
+</body>
