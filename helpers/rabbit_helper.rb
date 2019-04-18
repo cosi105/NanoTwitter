@@ -8,15 +8,15 @@ else
   rabbit = Bunny.new(automatically_recover: false)
 end
 rabbit.start
-channel = rabbit.create_channel
-RABBIT_EXCHANGE = channel.default_exchange
+CHANNEL = rabbit.create_channel
+RABBIT_EXCHANGE = CHANNEL.default_exchange
 
 # author_id, tweet_id, tweet_body
-NEW_TWEET = channel.queue('new_tweet.tweet_data')
+NEW_TWEET = CHANNEL.queue('new_tweet.tweet_data')
 # follower_id, follower_handle, followee_id, followee_handle
-NEW_FOLLOW_USER_DATA = channel.queue('new_follow.user_data')
+NEW_FOLLOW_USER_DATA = CHANNEL.queue('new_follow.user_data')
 # follower_id: [tweet_ids…]
-NEW_FOLLOW_TIMELINE_DATA = channel.queue('new_follow.timeline_data')
+NEW_FOLLOW_TIMELINE_DATA = CHANNEL.queue('new_follow.timeline_data')
 
 # Generate new tweet payload as json object & publish it to queue.
 def rabbit_new_tweet(author_id, tweet_id, tweet_body)
@@ -56,7 +56,8 @@ end
 # Publishes JSON payloads to seed queues for microservices
 def publish_seeds
   # Follows
-  follow_data_seed = channel.queue('follow.data.seed')
+  puts 'Starting seeding!'
+  follow_data_seed = CHANNEL.queue('follow.data.seed')
   follows_data_payload = []
   Follow.all.each do |f|
     follows_data_payload << {
@@ -67,12 +68,14 @@ def publish_seeds
     }
   end
   publish(follow_data_seed, follows_data_payload.to_json)
-
+  puts 'Finished seeding!'
   # Tweets
-  searcher_seed = channel.queue('searcher.seed')
-  tweet_html_router_seed = channel.queue('tweet.html.router.seed')
-  
+  searcher_seed = CHANNEL.queue('searcher.seed')
+  tweet_html_router_seed = CHANNEL.queue('tweet.html.router.seed')
+
   # Timeline Pieces
-  timeline_data_seed = channel.queue('timeline.data.seed')
-  timeline_html_seed = channel.queue('timeline.html.seed')
+  timeline_data_seed = CHANNEL.queue('timeline.data.seed')
+  timeline_html_seed = CHANNEL.queue('timeline.html.seed')
 end
+
+publish_seeds
