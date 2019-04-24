@@ -19,11 +19,13 @@ NEW_FOLLOW_USER_DATA = CHANNEL.queue('new_follow.user_data')
 NEW_FOLLOW_TIMELINE_DATA = CHANNEL.queue('new_follow.timeline_data')
 
 # Generate new tweet payload as json object & publish it to queue.
-def rabbit_new_tweet(author_id, tweet_id, tweet_body)
+def rabbit_new_tweet(author_id, author_handle, tweet_id, tweet_body, tweet_created)
   payload = {
     author_id: author_id,
+    author_handle: author_handle,
     tweet_id: tweet_id,
-    tweet_body: tweet_body
+    tweet_body: tweet_body,
+    tweet_created: tweet_created
   }.to_json
   publish(NEW_TWEET, payload)
 end

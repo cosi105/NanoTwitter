@@ -17,7 +17,7 @@ post '/tweets/new' do
     body: params[:tweet][:body],
     created_on: DateTime.now
   )
-  rabbit_new_tweet(author.id, new_tweet.id, new_tweet.body)
+  rabbit_new_tweet(author.id, author.handle, new_tweet.id, new_tweet.body, new_tweet.created_on)
 
   Thread.new do
     followers = author.follows_to_me.pluck(:follower_id)
