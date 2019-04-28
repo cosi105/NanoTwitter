@@ -15,7 +15,7 @@ def publish_follows_seeds
         followee_handle: f.followee_handle
       }
     end
-    publish(follow_data_seed, follows_data_payload.to_json)
+    publish(follow_data_seed, follows_data_payload)
     puts 'Finished seeding Follows!'
 end
 
@@ -38,9 +38,9 @@ def publish_tweet_seeds
       tweet_body: t.body
     }
   end
-  publish(tweet_html_router_seed, tweet_html_payload.to_json)
+  publish(tweet_html_router_seed, tweet_html_payload)
+  publish(searcher_seed, searcher_payload)
   puts 'Finished seeding Tweets!'
-  publish(searcher_seed, searcher_pay)
 end
 
 # Timeline seeding: TimelineData
@@ -60,7 +60,7 @@ def publish_timeline_seeds
     end
     payload << { owner_id: user.id, sorted_tweets: tweet_data }
   end
-  publish(timeline_data_seed, payload.to_json)
+  publish(timeline_data_seed, payload)
   puts 'Finished seeding Tweet data!'
 end
 

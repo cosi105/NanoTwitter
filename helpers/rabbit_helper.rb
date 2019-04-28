@@ -52,5 +52,5 @@ end
 
 # Publishes a payload to a queue
 def publish(queue, payload)
-  RABBIT_EXCHANGE.publish(payload, routing_key: queue.name)
+  RABBIT_EXCHANGE.publish(payload.to_json, routing_key: queue.name)
 end
