@@ -57,7 +57,7 @@ end
 
 # Publishes JSON payloads to seed queues for microservices
 def publish_seeds
-  # Follows
+  # Follows seeding
   puts 'Starting seeding!'
   follow_data_seed = CHANNEL.queue('follow.data.seed')
   follows_data_payload = []
@@ -70,14 +70,43 @@ def publish_seeds
     }
   end
   publish(follow_data_seed, follows_data_payload.to_json)
-  puts 'Finished seeding!'
-  # Tweets
-  searcher_seed = CHANNEL.queue('searcher.seed')
-  tweet_html_router_seed = CHANNEL.queue('tweet.html.router.seed')
+  puts 'Finished seeding Follows!'
 
-  # Timeline Pieces
+  # Tweets seeding: TweetHTML & Searcher
+  tweet_html_payload = []
+  searcher_payload = []
+  tweet_html_router_seed = CHANNEL.queue('tweet.html.router.seed')
+  searcher_seed = CHANNEL.queue('searcher.seed')
+  Tweet.all.each do |t|
+    tweet_html_payload << {
+      author_id: t.author_id,
+      author_handle: t.author_handle,
+      tweet_id: t.tweet_id,
+      tweet_body: t.tweet_body,
+      tweet_created: t.tweet_created
+    }
+    searcher_payload << t.tweet_body
+  end
+  publish(tweet_html_router_seed, tweet_html_payload.to_json)
+  puts 'Finished seeding Tweets!'
+  publish(searcher_seed, searcher_payload.to_json)
+  puts 'Finished seeding Searcher!'
+
+  # Timeline Pieces seeding: TimelineHTML & TimelineData
   timeline_data_seed = CHANNEL.queue('timeline.data.seed')
+  timeline_data_payload = []
+  TimelinePiece.all.each do |tp|
+    timeline_data_payload << {
+      owner_id: tp.timeline_owner_id,
+      tweet_id: tp.tweet_id
+    }
+  end
+  publish(timeline_data_seed, timeline_data_payload.to_json)
+  puts 'Finished seeding TimelineData!'
+
   timeline_html_seed = CHANNEL.queue('timeline.html.seed')
+  timeline_html_payload = []
+  puts 'Finished seeding TimelineHTML!'
 end
 
 publish_seeds
