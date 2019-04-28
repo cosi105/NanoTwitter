@@ -81,11 +81,11 @@ def publish_seeds
     tweet_html_payload << {
       author_id: t.author_id,
       author_handle: t.author_handle,
-      tweet_id: t.tweet_id,
-      tweet_body: t.tweet_body,
-      tweet_created: t.tweet_created
+      tweet_id: t.id,
+      tweet_body: t.body,
+      tweet_created: t.created_on
     }
-    searcher_payload << t.tweet_body
+    searcher_payload << {t.id, t.body}
   end
   publish(tweet_html_router_seed, tweet_html_payload.to_json)
   puts 'Finished seeding Tweets!'
