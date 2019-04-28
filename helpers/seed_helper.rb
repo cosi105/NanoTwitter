@@ -45,16 +45,23 @@ end
 
 # Timeline seeding: TimelineData
 def publish_timeline_seeds
-    timeline_data_seed = CHANNEL.queue('timeline.data.seed')
-    timeline_data_payload = []
-    TimelinePiece.all.each do |tp|
-      timeline_data_payload << {
-        owner_id: tp.timeline_owner_id,
-        tweet_id: tp.tweet_id
+  timeline_data_seed = CHANNEL.queue('tweet.data.seed')
+  payload = []
+  User.all.each do |user|
+    tweet_data = []
+    user.timeline_tweets.order(:id).each do |t|
+      tweet_data << {
+        tweet_id: t.id,
+        tweet_body: t.body,
+        tweet_created: t.created_on,
+        author_id: t.author_id,
+        author_handle: t.author_handle
       }
     end
-    publish(timeline_data_seed, timeline_data_payload.to_json)
-    puts 'Finished seeding TimelineData!'
+    payload << { owner_id: user.id, sorted_tweets: tweet_data }
+  end
+  publish(timeline_data_seed, payload.to_json)
+  puts 'Finished seeding Tweet data!'
 end
 
 publish_follows_seeds
