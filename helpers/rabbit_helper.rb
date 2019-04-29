@@ -26,7 +26,7 @@ def rabbit_new_tweet(author_id, author_handle, tweet_id, tweet_body, tweet_creat
     tweet_id: tweet_id,
     tweet_body: tweet_body,
     tweet_created: tweet_created
-  }.to_json
+  }
   publish(NEW_TWEET, payload)
 end
 
@@ -37,7 +37,7 @@ def rabbit_new_follow(follower_id, follower_handle, followee_id, followee_handle
     follower_handle: follower_handle,
     followee_id: followee_id,
     followee_handle: followee_handle
-  }.to_json
+  }
   publish(NEW_FOLLOW_USER_DATA, payload)
 end
 
@@ -46,7 +46,7 @@ def rabbit_new_follow_timeline(follower_id, followee_tweet_ids)
   payload = {
     follower_id: follower_id,
     followee_tweets: followee_tweet_ids
-  }.to_json
+  }
   publish(NEW_FOLLOW_TIMELINE_DATA, payload)
 end
 
