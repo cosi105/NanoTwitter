@@ -73,11 +73,13 @@ end
 # Flush everything before seeding
 [REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
 
-require_relative '../models/user'
-require_relative '../models/follow'
-puts 'Starting seeding...'
-publish_timeline_data_seed
-publish_follow_data_seed
-cache_user_data_seed
-publish_search_data_seed
-puts 'Finished seeding!'
+Thread.new do
+  require_relative '../models/user'
+  require_relative '../models/follow'
+  puts 'Starting seeding...'
+  publish_timeline_data_seed
+  publish_follow_data_seed
+  cache_user_data_seed
+  publish_search_data_seed
+  puts 'Finished seeding!'
+end
