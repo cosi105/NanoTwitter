@@ -1,28 +1,16 @@
 # Holds cache/Redis-related helper functions.
 
 # Gets env-specific Redis object
-def get_redis_object
-  redis = nil
-  if Sinatra::Base.production?
-    configure do
-      uri = URI.parse(ENV['REDISCLOUD_URL'])
-      redis = Redis.new(host: uri.host, port: uri.port, password: uri.password)
-    end
-  else
-    redis = Redis.new
+
+if Sinatra::Base.production?
+  configure do
+    REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA = %w[FOLLOW_HTML_URL SEARCH_HTML_URL TIMELINE_HTML_URL USER_DATA_URL].map { |s| redis_from_uri(s) }
   end
-  redis.flushall
-  redis
+else
+  REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA = [6380, 6382, 6379, 6381].map { |i| Redis.new(port: i) }
 end
 
-# Initialize a Redis object for use globally
-REDIS = get_redis_object
-
-# Pre-caches a mapping of all user handles to user ids
-require_relative '../models/user'
-Thread.new do
-  User.all.each do |user|
-    REDIS.set("#{user.handle}:user_id", user.id)
-    user.tweets.each { |tweet| REDIS.lpush("#{user.handle}:tweet_ids", tweet.id) }
-  end
+def redis_from_uri(key)
+  uri = URI.parse(ENV[key])
+  Redis.new(host: uri.host, port: uri.port, password: uri.password)
 end
