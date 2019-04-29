@@ -77,6 +77,7 @@ Thread.new do
   require_relative '../models/user'
   require_relative '../models/follow'
   puts 'Starting seeding...'
+  purge_all_queues
   publish_timeline_data_seed
   publish_follow_data_seed
   cache_user_data_seed
