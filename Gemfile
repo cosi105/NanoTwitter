@@ -16,10 +16,10 @@ gem 'rake'
 gem 'rb-readline'
 gem 'redis'
 gem 'sinatra'
-gem 'sinatra-activerecord' 
+gem 'sinatra-activerecord'
 gem 'sinatra-flash'
 gem 'simplecov'
-gem 'puma'
+gem 'thin'
 
 
 group :development do
