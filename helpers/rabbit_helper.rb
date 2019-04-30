@@ -41,7 +41,7 @@ def create_and_publish_tweet(params)
     tweet_created: tweet.created_on
   }
   publish(NEW_TWEET, payload)
-  public(NEW_TWEET_TO_SEARCH, payload)
+  publish(NEW_TWEET_TO_SEARCH, payload)
   publish(NEW_TWEET_TO_DB, {author_id: tweet.author_id, tweet_id: tweet.id})
   puts "Published tweet #{tweet.id}"
 end
