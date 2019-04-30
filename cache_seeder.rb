@@ -1,6 +1,20 @@
 # Holds helper functions used to seed Redis caches via RabbitMQs.
 require './app'
 
+def caffeinate_apps
+  require 'httparty'
+  urls = %w[nano-twitter nano-twitter-follow-data nano-twitter-searcher nano-twitter-timeline_data nano-twitter-tweet-html]
+  urls.map! { |s| "https://#{s}.herokuapp.com/" }
+
+  loop do
+    urls.each do |url|
+      HTTParty.get(url)
+      puts "Pinged #{url}"
+    end
+    5.times { sleep 60 }
+  end
+end
+
 # Follows seeding
 def publish_follow_data_seed
   puts 'Seeding Follows...'
@@ -69,13 +83,17 @@ def cache_user_data_seed
   puts 'Finished loading User data!'
 end
 
-# Flush everything before seeding
-[REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
+Thread.new do
+  # Flush everything before seeding
+  [REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
 
-puts 'Starting seeding...'
-purge_all_queues
-publish_timeline_data_seed
-publish_follow_data_seed
-cache_user_data_seed
-publish_search_data_seed
-puts 'Finished seeding!'
+  puts 'Starting seeding...'
+  purge_all_queues
+  publish_timeline_data_seed
+  publish_follow_data_seed
+  cache_user_data_seed
+  publish_search_data_seed
+  puts 'Finished seeding!'
+end
+
+caffeinate_apps
