@@ -13,6 +13,7 @@ RABBIT_EXCHANGE = CHANNEL.default_exchange
 
 # author_id, tweet_id, tweet_body
 NEW_TWEET = CHANNEL.queue('new_tweet.tweet_data')
+NEW_TWEET_TO_SEARCH = CHANNEL.queue('new_tweet.searcher.tweet_data')
 NEW_TWEET_TO_DB = CHANNEL.queue('new_tweet.to_db')
 NEW_FOLLOW_TO_DB = CHANNEL.queue('new_follow.to_db')
 
@@ -40,6 +41,7 @@ def create_and_publish_tweet(params)
     tweet_created: tweet.created_on
   }
   publish(NEW_TWEET, payload)
+  public(NEW_TWEET_TO_SEARCH, payload)
   publish(NEW_TWEET_TO_DB, {author_id: tweet.author_id, tweet_id: tweet.id})
   puts "Published tweet #{tweet.id}"
 end
@@ -54,7 +56,7 @@ def create_and_publish_follow(params)
   publish(NEW_FOLLOW_TIMELINE_DATA, payload)
 end
 
-# Use author_id & tweet_id to 
+# Use author_id & tweet_id to
 def rabbit_new_tweet_db_timelines(body)
   followers = REDIS_FOLLOW_DATA.lrange("#{body['author_id'].to_i}:follower_ids", 0, -1)
   tweet_id = body['tweet_id'].to_i
