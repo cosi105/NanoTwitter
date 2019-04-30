@@ -1,5 +1,5 @@
 get '/search' do
-  REDIS_SEARCH_HTML.lrange(params[:token], 0, -1).join
+  REDIS_SEARCH_HTML.get("#{params[:token]}:joined")
 end
 
 # Example
