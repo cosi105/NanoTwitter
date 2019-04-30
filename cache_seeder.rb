@@ -3,7 +3,7 @@ require './app'
 require 'httparty'
 
 def ping_apps
-  urls = %w[nano-twitter nano-twitter-follow-data nano-twitter-searcher nano-twitter-timeline_data nano-twitter-tweet-html]
+  urls = %w[nano-twitter nano-twitter-follow-data nano-twitter-searcher nano-twitter-timeline-data nano-twitter-tweet-html]
   urls.map! { |s| "https://#{s}.herokuapp.com/" }
   urls.each do |url|
     HTTParty.get(url)

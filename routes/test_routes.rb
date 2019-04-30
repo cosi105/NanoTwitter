@@ -5,7 +5,7 @@ end
 
 # Example
 # http://localhost:4567/test/user/tweet?user_id=1000&tweet_count=5&user_handle=ahmed1000
-get '/test/user/tweet' do
+get '/test/tweet' do
   num_tweets = params[:tweet_count].to_i
   # NOTE: We're hard-coding a sample Tweet body only to
   # simulate receiving one (already formed) as a parameter,
