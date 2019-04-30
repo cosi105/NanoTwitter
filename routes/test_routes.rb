@@ -1,5 +1,6 @@
 get '/search' do
-  REDIS_SEARCH_HTML.get("#{params[:token]}:joined")
+  @timeline_html = REDIS_SEARCH_HTML.get("#{params[:token]}:joined")
+  erb :timeline
 end
 
 # Example
@@ -20,4 +21,5 @@ get '/test/user/tweet' do
   }
   puts 'Built tweet params'
   num_tweets.times { create_and_publish_tweet(tweet_params) }
+  200
 end
