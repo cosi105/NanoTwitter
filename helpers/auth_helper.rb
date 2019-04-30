@@ -15,7 +15,7 @@ def register(params)
   else
     status 201 # Created
     user = User.create(name: name, handle: user_handle, password: password)
-    REDIS.set(user.handle, user.id)
+    REDIS_USER_DATA.set(user.handle, user.id)
     set_session_user(user)
   end
 end
@@ -29,8 +29,8 @@ end
 
 # Given a user handle, returns a user id (if found)
 def get_user_from_handle(user_handle)
-  if REDIS.exists(user_handle)
-    User.find(REDIS.get(user_handle).to_i)
+  if REDIS_USER_DATA.exists(user_handle)
+    User.find(REDIS_USER_DATA.get(user_handle).to_i)
   else
     User.find_by(handle: user_handle)
   end

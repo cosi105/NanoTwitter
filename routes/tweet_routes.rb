@@ -2,8 +2,8 @@
 
 # Main/Timeline view
 get '/' do
-  # TODO: Pass this to ERB
-  @timeline_html = REDIS_TIMELINE_HTML.get(params[:user_id])
+  user_id = (session[:user])? session[:user].id : params[:user_id]
+  @timeline_html = REDIS_TIMELINE_HTML.get(user_id)
   erb :timeline
 end
 
