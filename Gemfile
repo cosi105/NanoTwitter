@@ -16,7 +16,7 @@ gem 'simplecov'
 gem 'sinatra'
 gem 'sinatra-activerecord'
 gem 'sinatra-flash'
-gem 'thin'
+gem 'puma'
 
 group :development do
   gem 'pry-byebug'

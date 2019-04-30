@@ -1,0 +1,91 @@
+body {
+  background-color: white;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.page-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 6fr;
+  grid-template-rows: 75px auto;
+  user-select: none;
+}
+
+.top-nav {
+  background-color: white;
+  border-bottom: 1px solid #c9c8cc;
+  display: grid;
+  filter: drop-shadow(0px 1px 1px #c9c8cc);
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-column: 1 / span end;
+  grid-row: 1;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.side-nav {
+  background-color: white;
+  border-bottom: 1px solid #c9c8cc;
+  border-right: 1px solid #c9c8cc;
+  border-bottom-right-radius: 5px;
+  filter: drop-shadow(1px 2px 1px #c9c8cc);
+  grid-row: 2 / span 50;
+  height: -webkit-fill-available;
+  justify-self: left;
+  padding: 15px;
+  user-select: none;
+  width: fit-content;
+}
+
+.main-container {
+  display: grid;
+  grid-auto-rows: 20%;
+  grid-column: 2 / span end;
+  grid-row: 2 / span 50;
+  margin: 10px;
+}
+
+.app-name {
+  align-self: center;
+  color: #7dbfd5;
+  font-family: "Helvetica";
+  font-size: 20pt;
+  grid-column: 2;
+  justify-self: center;
+}
+
+.fas.fa-feather {
+  align-self: center;
+  font-size: 30pt;
+  grid-column: last;
+  justify-self: right;
+}
+
+.nav-btn {
+  color: #c9c8cc;
+}
+
+.nav-btn:hover {
+  color: #118ab2;
+  transform: scale(1.1, 1.1);
+}
+
+.side-nav-item:hover {
+  color: #118ab2;
+}
+
+.side-nav-item {
+  color: #c9c8cc;
+  font-family: "Helvetica", sans-serif;
+  font-size: 18px;
+  padding: 20px;
+  text-align: center;
+}
+
+.nav-btn:active,
+.side-nav-item:active {
+  color: #ffd166;
+}

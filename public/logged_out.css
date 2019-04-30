@@ -1,0 +1,51 @@
+:root {
+  background-color: #e8edee;
+}
+.formcards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  margin-top: 10%;
+}
+.formcard {
+  display: grid;
+  background-color: #118ab2;
+  border: 1px solid #073b4c;
+  border-radius: 10px;
+  filter: drop-shadow(1px 2px 1px #c9c8cc);
+  grid-column: 2;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: fit-content;
+  justify-self: center;
+  padding: 75px;
+  width: fit-content;
+}
+form {
+  align-self: center;
+  grid-column: 2;
+  text-align: center;
+}
+input {
+  align-self: center;
+  border: 1px solid #073b4c;
+  border-radius: 5px;
+  font-size: 14pt;
+  margin: 20px;
+  padding: 10px;
+  text-align: center;
+}
+input::placeholder {
+  color: #c9c8cc;
+}
+button {
+  background-color: white;
+  border: 1px solid #073b4c;
+  border-radius: 10px;
+  color: #073b4c;
+  filter: drop-shadow(1px 2px 1px #073b4c);
+  font-size: 14pt;
+  font-weight: bolder;
+  margin-top: 20px;
+  padding: 15px;
+  width: 100%;
+}

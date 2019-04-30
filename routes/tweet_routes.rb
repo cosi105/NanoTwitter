@@ -1,5 +1,12 @@
 # Holds all tweet-related routing logic (viz., timeline & new tweet)
 
+# Main/Timeline view
+get '/' do
+  # TODO: Pass this to ERB
+  @timeline_html = REDIS_TIMELINE_HTML.get(params[:user_id])
+  erb :timeline
+end
+
 # Returns/renders new Tweet view
 get '/tweets/new' do
   # Authenticate first
@@ -11,16 +18,11 @@ end
 post '/tweets/new' do
   # Authenticate?
   author = session[:user]
-  new_tweet = Tweet.create(
+  new_tweet = {
     author_id: author.id,
     author_handle: author.handle,
     body: params[:tweet][:body],
     created_on: DateTime.now
-  )
-  rabbit_new_tweet(author.id, author.handle, new_tweet.id, new_tweet.body, new_tweet.created_on)
-
-  Thread.new do
-    followers = author.follows_to_me.pluck(:follower_id)
-    followers.each { |f| TimelinePiece.create(timeline_owner_id: f, tweet_id: new_tweet.id) }
-  end
+  }
+  create_and_publish_tweet(new_tweet)
 end
