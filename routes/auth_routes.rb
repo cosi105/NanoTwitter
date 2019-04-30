@@ -11,7 +11,7 @@ post '/register' do
   if user.nil?
     redirect '/register'
   else
-    redirect '/tweets'
+    redirect '/'
   end
 end
 
@@ -27,7 +27,6 @@ post '/login' do
   if user.nil?
     redirect '/login'
   else
-    # Start precaching...?
-    redirect '/tweets'
+    redirect '/'
   end
 end
