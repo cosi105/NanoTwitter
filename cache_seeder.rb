@@ -1,6 +1,5 @@
 # Holds helper functions used to seed Redis caches via RabbitMQs.
-require_relative 'rabbit_helper'
-require_relative 'redis_helper'
+require './app'
 
 # Follows seeding
 def publish_follow_data_seed
@@ -71,16 +70,12 @@ def cache_user_data_seed
 end
 
 # Flush everything before seeding
-[REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
+[REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
 
-Thread.new do
-  require_relative '../models/user'
-  require_relative '../models/follow'
-  puts 'Starting seeding...'
-  purge_all_queues
-  publish_timeline_data_seed
-  publish_follow_data_seed
-  cache_user_data_seed
-  publish_search_data_seed
-  puts 'Finished seeding!'
-end
+puts 'Starting seeding...'
+purge_all_queues
+publish_timeline_data_seed
+publish_follow_data_seed
+cache_user_data_seed
+publish_search_data_seed
+puts 'Finished seeding!'

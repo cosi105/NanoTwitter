@@ -16,18 +16,14 @@ end
 
 # Handles following a new user
 post '/users/following' do
-  follower = session[:user]
-
+  user = session[:user]
   followee_handle = params[:followee_handle]
-  followee_id = REDIS.get("#{followee_handle}:user_id")
-  rabbit_new_follow(follower.id, follower.handle, followee_id, followee_handle)
-
-  followee_tweet_ids = REDIS.get("#{followee_id}:tweet_ids")
-  rabbit_new_follow_timeline(follower.id, followee_tweet_ids)
-
-  Thread.new do
-    Follow.create(follower_id: follower.id, followee_id: followee_id)
-    followee_tweet_ids.each { |t| TimelinePiece.create(timeline_owner_id: follower.id, tweet_id: t.to_i) }
-  end
+  follow_params = {
+    follower_id: user.id,
+    follower_handle: user.handle,
+    followee_id: REDIS_USER_DATA.get("#{followee_handle}:user_id").to_i,
+    followee_handle: followee_handle
+  }
+  create_and_publish_follow(follow_params)
   redirect '/users'
 end
