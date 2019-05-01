@@ -69,13 +69,6 @@ def tweets_as_payload(tweets)
   }
 end
 
-def publish_search_data_seed
-  puts 'Seeding search data...'
-  payload = Tweet.all.map { |t| {tweet_id: t.id, tweet_body: t.body} }
-  publish(CHANNEL.queue('searcher.data.seed'), payload)
-  puts 'Finished seeding search data!'
-end
-
 # Pre-caches a mapping of all user handles to user ids
 def cache_user_data_seed
   puts 'Loading User data...'
@@ -98,5 +91,4 @@ purge_all_queues
 publish_timeline_data_seed
 publish_follow_data_seed
 cache_user_data_seed
-publish_search_data_seed
 puts 'Finished seeding!'

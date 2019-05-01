@@ -14,13 +14,12 @@ RABBIT_EXCHANGE = CHANNEL.default_exchange
 # author_id, tweet_id, tweet_body
 NEW_TWEET = CHANNEL.queue('new_tweet.tweet_data')
 NEW_TWEET_TO_FOLLOWS = CHANNEL.queue('new_tweet.follow.tweet_data')
-NEW_TWEET_TO_SEARCH = CHANNEL.queue('new_tweet.searcher.tweet_data')
 NEW_TWEET_TO_DB = CHANNEL.queue('new_tweet.to_db')
 NEW_FOLLOW_TO_DB = CHANNEL.queue('new_follow.to_db')
 
 # follower_id, follower_handle, followee_id, followee_handle
 NEW_FOLLOW_DATA = CHANNEL.queue('new_follow.data')
-# follower_id: [tweet_ids…]
+# follower_id: [tweet_ids...]
 NEW_FOLLOW_TIMELINE_DATA = CHANNEL.queue('new_follow.timeline_data')
 
 # MQ to asynchronously update the DB upon receiving a new Tweet
@@ -43,7 +42,6 @@ def create_and_publish_tweet(params)
   }
   publish(NEW_TWEET, payload)
   publish(NEW_TWEET_TO_FOLLOWS, payload)
-  publish(NEW_TWEET_TO_SEARCH, payload)
   publish(NEW_TWEET_TO_DB, {author_id: tweet.author_id, tweet_id: tweet.id})
   puts "Published tweet #{tweet.id}"
 end
