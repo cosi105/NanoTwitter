@@ -28,6 +28,7 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     json (2.2.0)
+    kgio (2.11.2)
     map (6.6.0)
     method_source (0.9.2)
     mime-types (3.2.2)
@@ -44,7 +45,6 @@ GEM
     pry-byebug (3.7.0)
       byebug (~> 11.0)
       pry (~> 0.10)
-    puma (3.12.1)
     rack (2.0.7)
     rack-protection (2.0.5)
       rack
@@ -56,6 +56,7 @@ GEM
     rails_helper (2.2.2)
       rails_current (>= 1.0)
       rails_default_url_options (>= 1.0)
+    raindrops (0.19.0)
     rake (12.3.2)
     redis (4.1.0)
     simplecov (0.16.1)
@@ -77,6 +78,9 @@ GEM
     tilt (2.0.9)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    unicorn (5.5.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -91,7 +95,6 @@ DEPENDENCIES
   newrelic_rpm
   pg
   pry-byebug
-  puma
   rack
   rack-test
   rails_helper
@@ -101,6 +104,7 @@ DEPENDENCIES
   sinatra
   sinatra-activerecord
   sinatra-flash
+  unicorn
 
 BUNDLED WITH
    2.0.1
