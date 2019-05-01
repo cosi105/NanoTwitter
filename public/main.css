@@ -8,6 +8,7 @@ a {
 }
 
 .page-container {
+  background-color: #e8edee;
   display: grid;
   grid-template-columns: 1fr 1fr 6fr;
   grid-template-rows: 75px auto;
@@ -29,7 +30,6 @@ a {
 
 .side-nav {
   /* background-image: linear-gradient(#ef476f 5%, #ffc43d); */
-  background-color: white;
   /* border-bottom: 1px solid #c9c8cc;
   border-right: 1px solid #c9c8cc;
   border-bottom-right-radius: 5px; */
@@ -43,7 +43,6 @@ a {
 }
 
 .main-container {
-  background-image: linear-gradient(to top, black 40%, #1a535c, #06d6a0);
   display: grid;
   grid-auto-rows: 20%;
   grid-column: 2 / span end;
@@ -60,6 +59,19 @@ a {
   justify-self: center;
 }
 
+#log-out {
+  color: #c9c8cc;
+  background-color: white;
+  border: 1px solid #c9c8cc;
+  filter: drop-shadow(0px 1px 1px #c9c8cc);
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+  padding: 10px;
+  justify-self: left;
+  align-self: center;
+}
+
 .fas.fa-feather {
   align-self: center;
   font-size: 30pt;
@@ -71,17 +83,25 @@ a {
   color: #c9c8cc;
 }
 
+#log-out:hover,
 .nav-btn:hover {
   color: #118ab2;
+  border: 1px solid #118ab2;
   transform: scale(1.1, 1.1);
 }
 
 .side-nav-item:hover {
   color: #118ab2;
+  border: 1px solid #118ab2;
 }
 
 .side-nav-item {
   color: #c9c8cc;
+  background-color: white;
+  border: 1px solid #c9c8cc;
+  filter: drop-shadow(0px 1px 1px #c9c8cc);
+  border-radius: 5px;
+  margin-top: 25px;
   font-family: "Helvetica", sans-serif;
   font-size: 18px;
   padding: 20px;
@@ -95,10 +115,12 @@ a {
 
 .tweet-container {
   background-color: white;
+  border: 1px solid #c9c8cc;
+  filter: drop-shadow(0px 1px 1px #c9c8cc);
   border-radius: 5px;
   padding: 25px;
-  margin-top: 25px;
   margin-right: 10%;
+  margin-top: 25px;
 }
 
 .tweet-body {
@@ -106,6 +128,10 @@ a {
   font-size: 20px;
   padding: 5px;
   padding-bottom: 10px;
+}
+.tweet-container:hover {
+  border: 1px solid #118ab2;
+  transform: scale(1.1, 1.1);
 }
 
 .tweet-signature {
@@ -119,4 +145,56 @@ a {
   color: #03a378;
   display: inline;
   text-align: right;
+}
+
+/* New Tweet CSS */
+.formcards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  margin-top: 25px;
+}
+.formcard {
+  display: grid;
+  background-color: #118ab2;
+  border: 1px solid #073b4c;
+  border-radius: 10px;
+  filter: drop-shadow(1px 2px 1px #c9c8cc);
+  grid-column: 2;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: fit-content;
+  justify-self: center;
+  padding: 35px;
+  width: 50%;
+  min-width: fit-content;
+}
+form {
+  align-self: center;
+  grid-column: 2;
+  text-align: center;
+}
+input {
+  align-self: center;
+  border: 1px solid #073b4c;
+  border-radius: 5px;
+  font-size: 14pt;
+  margin: 20px;
+  padding: 10px;
+  text-align: center;
+  width: 300px;
+}
+input::placeholder {
+  color: #c9c8cc;
+}
+button {
+  background-color: white;
+  border: 1px solid #073b4c;
+  border-radius: 10px;
+  color: #073b4c;
+  filter: drop-shadow(1px 2px 1px #073b4c);
+  font-size: 14pt;
+  font-weight: bolder;
+  margin-top: 20px;
+  padding: 15px;
+  width: 100%;
 }

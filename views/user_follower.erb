@@ -1,7 +1,11 @@
-<ol>
+<div>
   <% @followers.each do |user| %>
-    <li>
-      <%= user.handle %>
-    </li>
+    <div class="tweet-container">
+      <div class="tweet-body">
+        <div class="tweet-signature">
+          <%= user.handle %>
+        </div>
+      </div>
+    </div>
   <% end %>
-</ol>
+<div>

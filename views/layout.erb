@@ -3,6 +3,7 @@
 <head>
   <link rel="stylesheet" href="<%= url('/main.css') %>">
   <script src="<%= url('/index.js') %>"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
@@ -11,8 +12,11 @@
       <div class="app-name nav-btn">
         nanoTwitter
       </div>
-      <i class="fas fa-feather nav-btn" id="new-tweet"></i>
-      <%# <img src="feather.svg" class="fas fa-feather nav-btn" id="new-tweet" /> %>
+      <div id="log-out">
+        <a id="logout-text" href="/login">
+          Log Out
+        </a>
+      </div>
     </div>
     <div class="side-nav">
       <a href="/users/profile">
@@ -20,7 +24,7 @@
           Profile
         </div>
       </a>
-      <a href="/tweets">
+      <a href="/">
         <div class="side-nav-item">
           Timeline
         </div>
@@ -35,14 +39,19 @@
           Following
         </div>
       </a>
-      <a href="">
-        <div class="side-nav-item">
-          Mentions
-        </div>
-      </a>
     </div>
     <div class="main-container">
-      <%= yield %>
+      <div>
+        <%= yield %>
+      </div>
     </div>
   </div>
 </body>
+<script>
+  $(document).ready(function() {
+    $(".tweet-signature").click( function(){
+      followee_handle = $(this).text();
+      $.post( "/users/follow", {followee_handle: followee_handle});
+    });
+  });
+</script>

@@ -1,1 +1,13 @@
-<ol><%= @timeline_html %></ol>
+<div class="formcards-container">
+  <div class="formcard">
+    <form action="/tweets/new" method="post">
+      <div class="new-tweet-textarea">
+        <textarea id="body" name="tweet[body]" required="true" rows="5" colums="50"></textarea>
+      </div>
+      <div>
+        <button class="new-tweet-button" type="submit">Post</button>
+      </div>
+    </form>
+  </div>
+</div>
+<%= @timeline_html %>
