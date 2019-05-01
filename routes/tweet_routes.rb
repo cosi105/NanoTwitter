@@ -10,7 +10,6 @@ end
 # Returns/renders new Tweet view
 get '/tweets/new' do
   # Authenticate first
-  # byebug
   erb :new_tweet
 end
 

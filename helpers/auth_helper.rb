@@ -16,6 +16,13 @@ def register(params)
     status 201 # Created
     user = User.create(name: name, handle: user_handle, password: password)
     REDIS_USER_DATA.set(user.handle, user.id)
+    follow_params = {
+      follower_id: user.id,
+      follower_handle: user.handle,
+      followee_id: user.id,
+      followee_handle: user.handle
+    }
+    create_and_publish_follow(follow_params)
     set_session_user(user)
   end
 end

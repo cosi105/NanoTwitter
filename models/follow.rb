@@ -6,6 +6,4 @@ class Follow < ActiveRecord::Base
   # No two follows should have the same follower and followee
   validates_uniqueness_of :follower_id, scope: %i[followee_id]
 
-  # Follower != Followee (user can't follow themselves)
-  validates :follower_id, exclusion: { in: ->(follow) { [follow.followee_id] } }
 end
