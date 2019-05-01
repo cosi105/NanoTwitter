@@ -12,7 +12,7 @@ get '/test/tweet' do
   # rather than generating one on the fly, which would incur
   # an unrealistic time/compute cost on the server side.
   # We promise we know good code style practices. <3
-  test_tweet_body = "I'd never hard-code a test Tweet, not even for debugging purposes!"
+  test_tweet_body = "Load balancers are awesome!"
   tweet_params = {
     author_id: params[:user_id].to_i,
     author_handle: "@#{params[:user_handle]}",
