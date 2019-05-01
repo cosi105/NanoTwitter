@@ -15,6 +15,6 @@ else
 end
 
 
-def purge_all_caches
+def purge_all_local_caches
   [REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
 end
