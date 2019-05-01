@@ -1,1 +1,1 @@
-web: puma config.ru -t 16:64 -p $PORT
+web: puma config.ru -t 0:32 -p $PORT
