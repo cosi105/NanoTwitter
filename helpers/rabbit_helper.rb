@@ -58,23 +58,27 @@ end
 
 # Use author_id & tweet_id to
 def rabbit_new_tweet_db_timelines(body)
-  followers = REDIS_FOLLOW_DATA.lrange("#{body['author_id'].to_i}:follower_ids", 0, -1)
-  tweet_id = body['tweet_id'].to_i
-  tweet = Tweet.find(tweet_id)
-  followers.each { |f| TimelinePiece.create(
-    tweet_body: tweet.body,
-    tweet_created_on: tweet.created_on,
-    tweet_author_handle: tweet.author_handle,
-    timeline_owner_id: f,
-    tweet_id: tweet_id
-  ) }
-  puts 'Created timeline pieces'
+  Thread.new do
+    followers = REDIS_FOLLOW_DATA.lrange("#{body['author_id'].to_i}:follower_ids", 0, -1)
+    tweet_id = body['tweet_id'].to_i
+    tweet = Tweet.find(tweet_id)
+    followers.each { |f| TimelinePiece.create(
+      tweet_body: tweet.body,
+      tweet_created_on: tweet.created_on,
+      tweet_author_handle: tweet.author_handle,
+      timeline_owner_id: f,
+      tweet_id: tweet_id
+    ) }
+    puts 'Created timeline pieces'
+  end
 end
 
 def rabbit_new_follow_db_timelines(body)
-  follow = Follow.create(body['follow_params'])
-  follower_id = follow.follower_id
-  body['followee_tweet_ids'].each { |t| TimelinePiece.create(timeline_owner_id: follower_id, tweet_id: t) }
+  Thread.new do
+    follow = Follow.create(body['follow_params'])
+    follower_id = follow.follower_id
+    body['followee_tweet_ids'].each { |t| TimelinePiece.create(timeline_owner_id: follower_id, tweet_id: t) }
+  end
 end
 
 # Publishes a new Tweet as a payload in order to consume &
