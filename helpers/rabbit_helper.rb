@@ -88,6 +88,10 @@ def publish(queue, payload)
   RABBIT_EXCHANGE.publish(payload.to_json, routing_key: queue.name)
 end
 
+def blank_publish(queue_name)
+  RABBIT_EXCHANGE.publish('', routing_key: queue_name)
+end
+
 def purge_all_queues
   %w[new_tweet.tweet_data new_follow.user_data new_follow.timeline_data timeline.data.seed.tweet_html timeline.data.seed.timeline_data searcher.data.seed new_tweet.tweet_data follow.data.seed new_tweet.follower_ids searcher.html new_follow.sorted_tweets].each { |name| CHANNEL.queue(name).purge }
 end

@@ -13,3 +13,8 @@ if Sinatra::Base.production?
 else
   REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA = [6385, 6380, 6382, 6379, 6381].map { |i| Redis.new(port: i) }
 end
+
+
+def purge_all_caches
+  [REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
+end

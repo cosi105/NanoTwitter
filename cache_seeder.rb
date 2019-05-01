@@ -79,6 +79,10 @@ def cache_user_data_seed
   puts 'Finished loading User data!'
 end
 
+def publish_cache_purge
+  %w[searcher timeline_data tweet_html].each { |s| blank_publish("cache.purge.#{s}") }
+end
+
 ping_apps
 
 Thread.new { caffeinate_apps }
@@ -88,6 +92,8 @@ Thread.new { caffeinate_apps }
 
 puts 'Starting seeding...'
 purge_all_queues
+purge_all_local_caches
+publish_cache_purge
 publish_timeline_data_seed
 publish_follow_data_seed
 cache_user_data_seed
