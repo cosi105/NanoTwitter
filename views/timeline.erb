@@ -1,13 +1,8 @@
-<div class="formcards-container">
-  <div class="formcard">
-    <form action="/tweets/new" method="post">
-      <div class="new-tweet-textarea">
-        <textarea id="body" name="tweet[body]" required="true" rows="5" colums="50"></textarea>
-      </div>
-      <div>
-        <button class="new-tweet-button" type="submit">Post</button>
-      </div>
-    </form>
+<div class="new-tweet-container">
+  <div class="new-tweet-heading">
+    Chirp Away!
   </div>
+  <textarea id="new-tweet-textarea" maxlength="140"></textarea>
+  <div id="post-btn">POST</div>
 </div>
 <%= @timeline_html %>

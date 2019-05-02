@@ -3,6 +3,8 @@
 # Main/Timeline view
 get '/' do
   enforce_authentication
+  # puts "\n\nHERE ARE YOUR PARAMS\n#{params}\n\n"
+
   user_id = session[:user] ? session[:user].id : params[:user_id]
   @timeline_html = REDIS_TIMELINE_HTML.get(user_id)
   erb :timeline
@@ -20,9 +22,11 @@ post '/tweets/new' do
   new_tweet = {
     author_id: author.id,
     author_handle: author.handle,
-    body: params[:tweet][:body],
+    body: params[:tweet_body],
     created_on: DateTime.now
   }
   create_and_publish_tweet(new_tweet)
-  redirect('/')
+
+  # tweet_as_param = new_tweet.map { |k, v| "#{k}=#{v}" }.join('&')
+  # redirect("/?#{tweet_as_param}")
 end

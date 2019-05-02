@@ -54,22 +54,24 @@ a {
   align-self: center;
   color: #7dbfd5;
   font-family: "Helvetica";
-  font-size: 20pt;
+  font-size: 28pt;
+  font-weight: bold;
   grid-column: 2;
   justify-self: center;
 }
 
 #log-out {
-  color: #c9c8cc;
-  background-color: white;
-  border: 1px solid #c9c8cc;
-  filter: drop-shadow(0px 1px 1px #c9c8cc);
-  border-radius: 5px;
-  width: fit-content;
-  height: fit-content;
-  padding: 10px;
-  justify-self: left;
   align-self: center;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #c9c8cc;
+  color: #c9c8cc;
+  filter: drop-shadow(0px 1px 1px #c9c8cc);
+  grid-column: last;
+  height: fit-content;
+  justify-self: left;
+  padding: 10px;
+  width: fit-content;
 }
 
 .fas.fa-feather {
@@ -87,7 +89,6 @@ a {
   color: #c9c8cc;
 }
 
-#log-out:hover,
 .nav-btn:hover {
   color: #118ab2;
   border: 1px solid #118ab2;
@@ -104,6 +105,7 @@ a {
   background-color: white;
   border: 1px solid #c9c8cc;
   filter: drop-shadow(0px 1px 1px #c9c8cc);
+  font-weight: bolder;
   border-radius: 5px;
   margin-top: 25px;
   font-family: "Helvetica", sans-serif;
@@ -136,6 +138,7 @@ a {
 .tweet-container:hover {
   border: 1px solid #118ab2;
   transform: scale(1.025, 1.025);
+  filter: drop-shadow(0px 4px 4px #c9c8cc);
 }
 
 .tweet-signature {
@@ -152,53 +155,73 @@ a {
 }
 
 /* New Tweet CSS */
-.formcards-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr auto;
-  margin-top: 25px;
-}
-.formcard {
-  display: grid;
-  background-color: #118ab2;
-  border: 1px solid #073b4c;
-  border-radius: 10px;
-  filter: drop-shadow(1px 2px 1px #c9c8cc);
-  grid-column: 2;
-  grid-template-columns: 1fr 1fr 1fr;
-  height: fit-content;
-  justify-self: center;
-  padding: 35px;
-  width: 50%;
-  min-width: fit-content;
-}
-form {
-  align-self: center;
-  grid-column: 2;
-  text-align: center;
-}
-input {
-  align-self: center;
-  border: 1px solid #073b4c;
-  border-radius: 5px;
-  font-size: 14pt;
-  margin: 20px;
-  padding: 10px;
-  text-align: center;
-  width: 300px;
-}
-input::placeholder {
-  color: #c9c8cc;
-}
-button {
+.new-tweet-container {
   background-color: white;
-  border: 1px solid #073b4c;
-  border-radius: 10px;
-  color: #073b4c;
-  filter: drop-shadow(1px 2px 1px #073b4c);
-  font-size: 14pt;
+  border: 1px solid #c9c8cc;
+  border-radius: 5px;
+  filter: drop-shadow(0px 2px 2px #c9c8cc);
+  margin-right: 10%;
+  margin-top: 25px;
+  min-height: 100px;
+  padding: 25px;
+  text-align: center;
+}
+
+.new-tweet-container:hover {
+  transform: scale(1.025, 1.025);
+}
+
+#new-tweet-textarea {
+  border: 1px solid #c9c8cc;
+  border-radius: 5px;
+  color: #1a535c;
+  display: inline-block;
+  font-size: 20px;
+  height: 100%;
+  padding: 10px;
+  resize: none;
+  width: -webkit-fill-available;
+}
+
+#new-tweet-textarea:focus {
+  outline: none;
+  border: 1px solid #03a378;
+}
+.new-tweet-heading {
+  text-align: center;
+  color: #118ab2;
+  font-family: "Helvetica";
+  font-size: 20pt;
   font-weight: bolder;
+  margin-bottom: 15px;
+}
+
+#post-btn {
+  background-color: #03a378;
+  /* border: 1px solid #c9c8cc; */
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  filter: drop-shadow(1px 2px 1px #c9c8cc);
+  font-family: "Helvetica";
+  font-size: 14pt;
   margin-top: 20px;
-  padding: 15px;
-  width: 100%;
+  padding: 10px;
+  width: fit-content;
+}
+
+#post-btn:active {
+  color: #f0f0f0;
+  background-color: #007c5b;
+  filter: drop-shadow(0px 0px 0px white);
+}
+
+.search-container {
+  border: 1px solid black;
+  display: contents;
+  width: fit-content;
+  grid-column: ;
+}
+#search-btn {
+  display: inline-block;
 }

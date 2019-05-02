@@ -10,8 +10,8 @@
   <div class="page-container">
     <div class="top-nav">
       <%# <div class="search-container">
-          <input maxlength="50" placeholder="search"></input>
-        <div class="search-go">go</div>
+          <input id="search-input" maxlength="100" placeholder="keyword"></input>
+        <div id="search-btn">go</div>
       </div> %>
       <div class="app-name nav-btn">
         nanoTwitter
@@ -61,6 +61,13 @@
     $(".followable").click( function(){
       followee_handle = this.innerText;
       $.post( "/users/follow", {followee_handle: followee_handle});
+    });
+
+    $("#post-btn").click( function(){
+      tweet_body = $("#new-tweet-textarea").val();
+      if (tweet_body === '') return ;
+      $.post( "/tweets/new", {tweet_body: tweet_body});
+      $("#new-tweet-textarea").val('');
     });
   });
 </script>
