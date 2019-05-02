@@ -34,6 +34,11 @@ def set_session_user(user)
   user
 end
 
+# Redirect to login if session doesn't have user
+def enforce_authentication
+  redirect('/login') if session[:user].nil?
+end
+
 # Given a user handle, returns a user id (if found)
 def get_user_from_handle(user_handle)
   if REDIS_USER_DATA.exists(user_handle)

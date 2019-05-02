@@ -2,6 +2,7 @@
 
 # Render view of user's followers
 get '/users/followers' do
+  enforce_authentication
   user = session[:user]
   @followers = user.followers
   erb :user_follower
@@ -9,13 +10,14 @@ end
 
 # Render view of the people the current user is following.
 get '/users/following' do
+  enforce_authentication
   user = session[:user]
-  # puts REDIS_USER_DATA.get(user.)
   @followees = user.followees
   erb :user_following
 end
 
 get '/users/profile' do
+  enforce_authentication
   @user = session[:user]
   erb :profile
 end
