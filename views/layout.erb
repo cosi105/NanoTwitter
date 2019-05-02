@@ -9,6 +9,10 @@
 <body>
   <div class="page-container">
     <div class="top-nav">
+      <%# <div class="search-container">
+          <input maxlength="50" placeholder="search"></input>
+        <div class="search-go">go</div>
+      </div> %>
       <div class="app-name nav-btn">
         nanoTwitter
       </div>
@@ -50,7 +54,12 @@
 <script>
   $(document).ready(function() {
     $(".tweet-signature").click( function(){
-      followee_handle = $(this).text();
+      followee_handle = this.innerText;
+      $.post( "/users/follow", {followee_handle: followee_handle});
+    });
+
+    $(".followable").click( function(){
+      followee_handle = this.innerText;
       $.post( "/users/follow", {followee_handle: followee_handle});
     });
   });

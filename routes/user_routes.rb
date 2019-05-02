@@ -21,13 +21,11 @@ get '/users/profile' do
 end
 
 post '/users/follow' do
-  puts "Going to publish:"
-  puts params
   new_follow = {
     follower_id: session[:user].id,
     follower_handle: session[:user].handle,
     followee_handle: params[:followee_handle],
-    followee_id: REDIS_USER_DATA.get("#{followee_handle}:user_id").to_i
+    followee_id: REDIS_USER_DATA.get("#{params[:followee_handle]}:user_id").to_i
   }
   create_and_publish_follow(new_follow)
 end

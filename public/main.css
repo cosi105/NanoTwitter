@@ -79,6 +79,10 @@ a {
   justify-self: right;
 }
 
+.search-container {
+  max-width: 25px;
+}
+
 .nav-btn {
   color: #c9c8cc;
 }
@@ -131,7 +135,7 @@ a {
 }
 .tweet-container:hover {
   border: 1px solid #118ab2;
-  transform: scale(1.1, 1.1);
+  transform: scale(1.025, 1.025);
 }
 
 .tweet-signature {

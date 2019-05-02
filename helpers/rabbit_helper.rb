@@ -48,12 +48,10 @@ end
 
 # Generate new follow payload as json object & publish it to queue.
 def create_and_publish_follow(params)
-  puts "FOLLOW PAYLOAD:"
-  puts params
   publish(NEW_FOLLOW_DATA, params)
 
   followee_tweet_ids = REDIS_USER_DATA.lrange("#{params[:followee_handle]}:tweet_ids", 0, -1)
-  payload = { follow_params: params, followee_tweets: followee_tweet_ids }
+  payload = { follow_params: params, followee_tweet_ids: followee_tweet_ids }
   publish(NEW_FOLLOW_TO_DB, payload)
   publish(NEW_FOLLOW_TIMELINE_DATA, payload)
 end
