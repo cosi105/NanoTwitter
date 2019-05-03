@@ -24,6 +24,7 @@
 echo "Spinning up Redis servers in background processes..."
 redis-server &
 redis-server --port 6390 &
+redis-server --port 6391 &
 ports='0 1 2 3 4 5 6 7 8 9'
 for port in $ports
 do
