@@ -1,10 +1,9 @@
 
 <div>
   <% @followees.each do |user| %>
-    <div class="tweet-container">
-      <div class="tweet-body">
-          <%= user.handle %>
-      </div>
+    <div class="user-container">
+      <i class="fas fa-minus-circle unfollow-btn"></i>
+      <%= user.handle %>
     </div>
   <% end %>
 <div>

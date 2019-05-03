@@ -5,6 +5,7 @@ get '/users/followers' do
   enforce_authentication
   user = session[:user]
   @followers = user.followers
+  @current_user = user.name
   erb :user_follower
 end
 
@@ -13,12 +14,14 @@ get '/users/following' do
   enforce_authentication
   user = session[:user]
   @followees = user.followees
+  @current_user = user.name
   erb :user_following
 end
 
 get '/users/profile' do
   enforce_authentication
   @user = session[:user]
+  @current_user = @user.name
   erb :profile
 end
 
@@ -30,6 +33,11 @@ post '/users/follow' do
     followee_id: REDIS_USER_DATA.get("#{params[:followee_handle]}:user_id").to_i
   }
   create_and_publish_follow(new_follow)
+end
+
+post '/users/unfollow' do
+  unfollow_handle = params[:unfollow_handle]
+  puts "Unfollowing #{unfollow_handle}"
 end
 
 # Handles following a new user

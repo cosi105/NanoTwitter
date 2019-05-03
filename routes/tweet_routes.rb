@@ -7,13 +7,8 @@ get '/' do
 
   user_id = session[:user] ? session[:user].id : params[:user_id]
   @timeline_html = REDIS_TIMELINE_HTML.get(user_id)
+  @current_user = session[:user].name
   erb :timeline
-end
-
-# Returns/renders new Tweet view
-get '/tweets/new' do
-  enforce_authentication
-  erb :new_tweet
 end
 
 # Handles new tweet post by placing a task in the appropriate queue
@@ -27,6 +22,12 @@ post '/tweets/new' do
   }
   create_and_publish_tweet(new_tweet)
 
-  # tweet_as_param = new_tweet.map { |k, v| "#{k}=#{v}" }.join('&')
-  # redirect("/?#{tweet_as_param}")
+  tweet_as_param = new_tweet.map { |k, v| "#{k}=#{v}" }.join('&')
+  redirect("/?#{tweet_as_param}")
+end
+
+get '/uisearch' do
+  @current_user = session[:user].name
+  @search_html = REDIS_SEARCH_HTML.get("#{params[:token]}:joined")
+  erb :search
 end
