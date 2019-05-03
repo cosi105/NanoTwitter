@@ -27,17 +27,13 @@ end
 
 post '/users/follow' do
   new_follow = {
+    remove: params[:remove], # Flags unfollow vs follow
     follower_id: session[:user].id,
     follower_handle: session[:user].handle,
     followee_handle: params[:followee_handle],
     followee_id: REDIS_USER_DATA.get("#{params[:followee_handle]}:user_id").to_i
   }
   create_and_publish_follow(new_follow)
-end
-
-post '/users/unfollow' do
-  unfollow_handle = params[:unfollow_handle]
-  puts "Unfollowing #{unfollow_handle}"
 end
 
 # Handles following a new user

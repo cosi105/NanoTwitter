@@ -49,7 +49,6 @@ end
 # Generate new follow payload as json object & publish it to queue.
 def create_and_publish_follow(params)
   publish(NEW_FOLLOW_DATA, params)
-
   followee_tweet_ids = REDIS_USER_DATA.lrange("#{params[:followee_handle]}:tweet_ids", 0, -1)
   payload = { follow_params: params, followee_tweet_ids: followee_tweet_ids }
   publish(NEW_FOLLOW_TO_DB, payload)
@@ -75,9 +74,13 @@ end
 
 def rabbit_new_follow_db_timelines(body)
   Thread.new do
-    follow = Follow.create(body['follow_params'])
-    follower_id = follow.follower_id
-    body['followee_tweet_ids'].each { |t| TimelinePiece.create(timeline_owner_id: follower_id, tweet_id: t) }
+    if body['follow_params']['remove']
+      Follow.find_by(follower_id: body['follow_params']['follower_id'].to_i, followee_id: body['follow_params']['followee_id'].to_i).destroy
+    else
+      follow = Follow.create(body['follow_params'])
+      follower_id = follow.follower_id
+      body['followee_tweet_ids'].each { |t| TimelinePiece.create(timeline_owner_id: follower_id, tweet_id: t) }
+    end
   end
 end
 

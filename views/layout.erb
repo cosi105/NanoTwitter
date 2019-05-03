@@ -72,7 +72,7 @@
 
     $(".unfollow-btn").click( function() {
       user_card = $(this).parent();
-      $.post( "/users/unfollow", {unfollow_handle: user_card.text().trim()} );
+      $.post( "/users/follow", {followee_handle: user_card.text().trim(), remove: true} );
       user_card.remove();
     });
 
