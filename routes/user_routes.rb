@@ -2,21 +2,20 @@
 
 # Render view of user's followers
 get '/users/followers' do
-  enforce_authentication
-  user = session[:user]
-  @follows = REDIS_FOLLOW_HTML.lrange("#{user.id}:followers", 0, -1)
-  @current_user = user.name
-  @action = 'follow'
-  erb :user_follows
+  get_follows('followers', 'follow')
 end
 
 # Render view of the people the current user is following.
 get '/users/following' do
+  get_follows('followees', 'unfollow')
+end
+
+def get_follows(key, action)
   enforce_authentication
   user = session[:user]
-  @follows = REDIS_FOLLOW_HTML.lrange("#{user.id}:followees", 0, -1)
+  @follows = REDIS_FOLLOW_HTML.lrange("#{user.id}:#{key}", 0, -1)
   @current_user = user.name
-  @action = 'unfollow'
+  @action = action
   erb :user_follows
 end
 
