@@ -31,17 +31,12 @@ end
 
 puts 'Starting seeding...'
 
-seed_threads = []
-
-seed_threads << Thread.new do
-  send_csv(['SEARCHER', 'search_data_1']).join
-  send_csv(['SEARCHER', 'search_data_2'])
-end
-
 seed_params = [%w[FOLLOW_DATA follow_data /data], %w[FOLLOW_DATA follow_html /html],
-               %w[TWEET_HTML search_html /search], %w[TIMELINE_DATA timeline_data], %w[TWEET_HTML timeline_html /timeline], %w[TWEET_HTML tweet_html /tweets]]
+               %w[SEARCHER search_data], %w[TWEET_HTML search_html /search],
+               %w[TIMELINE_DATA timeline_data], %w[TWEET_HTML timeline_html /timeline],
+               %w[TWEET_HTML tweet_html /tweets]]
 
-seed_params.each { |arr| seed_threads << send_csv(arr) }
+seed_threads = seed_params.map { |arr| send_csv(arr) }
 seed_threads << Thread.new { cache_user_data_seed }
 seed_threads.each(&:join)
 
