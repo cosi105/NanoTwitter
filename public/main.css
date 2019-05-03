@@ -225,11 +225,14 @@ body {
   font-size: 15pt;
   margin-right: 15px;
 }
+
+#logout-icon:hover,
 .unfollow-btn:hover {
   color: rgb(248, 106, 106);
   transform: scale(1.1, 1.1);
 }
 
+#nxt-page-btn:hover,
 .tweet-follow-btn:hover,
 .follow-btn:hover {
   color: #03a378;
@@ -242,4 +245,16 @@ body {
   font-family: "Helvetica";
   font-weight: bolder;
   font-size: 45pt;
+}
+
+#nxt-page-btn {
+  color: #c9c8cc;
+  font-size: 50pt;
+  margin: inherit;
+  margin-bottom: 100px;
+  margin-top: 30px;
+}
+#nxt-page-btn:active {
+  color: #007c5b;
+  filter: drop-shadow(0px 0px 0px white);
 }

@@ -81,6 +81,13 @@
       $.post( "/users/follow", {followee_handle: user_card.text().trim()} );
     });
 
+    $("#nxt-page-btn").click( function() {
+      if (window.location.pathname === "/uisearch"){
+        token = window.location.search.split("=")[1];
+        console.log(token);
+      }
+    });
+
     $("#profile-icon").click( () =>  window.location.href = "/users/profile");
 
     $("#timeline").click( () => window.location.href = "/");

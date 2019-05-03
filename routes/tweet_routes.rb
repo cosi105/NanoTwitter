@@ -27,6 +27,7 @@ post '/tweets/new' do
 end
 
 get '/uisearch' do
+  puts "Requested page ##{params[:page_num]}"
   @current_user = session[:user].name
   @search_html = REDIS_SEARCH_HTML.get("#{params[:token]}:joined")
   erb :search
