@@ -3,8 +3,6 @@
 # Main/Timeline view
 get '/' do
   enforce_authentication
-  # puts "\n\nHERE ARE YOUR PARAMS\n#{params}\n\n"
-
   user_id = session[:user] ? session[:user].id : params[:user_id]
   @timeline_html = REDIS_TIMELINE_HTML.get(user_id)
   @current_user = session[:user].name
@@ -22,8 +20,7 @@ post '/tweets/new' do
   }
   create_and_publish_tweet(new_tweet)
 
-  tweet_as_param = new_tweet.map { |k, v| "#{k}=#{v}" }.join('&')
-  redirect("/?#{tweet_as_param}")
+  redirect '/'
 end
 
 get '/uisearch' do
