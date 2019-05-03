@@ -82,3 +82,16 @@ end
 def publish_cache_purge
   %w[searcher timeline_data tweet_html].each { |s| blank_publish("cache.purge.#{s}") }
 end
+
+puts 'Starting seeding...'
+
+seed_params = [%w[FOLLOW_DATA follow_data /data], %w[FOLLOW_DATA follow_html /html],
+               %w[SEARCHER search_data], %w[TWEET_HTML search_html /search],
+               %w[TIMELINE_DATA timeline_data], %w[TWEET_HTML timeline_html /timeline],
+               %w[TWEET_HTML tweet_html /tweets]]
+
+seed_threads = seed_params.map { |arr| send_csv(arr) }
+seed_threads << Thread.new { cache_user_data_seed }
+seed_threads.each(&:join)
+
+puts 'Finished seeding!'
