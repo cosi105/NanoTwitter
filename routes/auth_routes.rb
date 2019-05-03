@@ -17,6 +17,7 @@ end
 
 # Render login page
 get '/login' do
+  params[:user] = nil
   erb :login, layout: false
 end
 

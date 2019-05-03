@@ -1,11 +1,22 @@
 :root {
   background-color: #e8edee;
 }
+
+.landing-title {
+  color: #118ab2;
+  display: table;
+  font-family: "Helvetica";
+  font-weight: bolder;
+  font-size: 50pt;
+  margin: auto;
+  margin-top: 25px;
+}
+
 .formcards-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr auto;
-  margin-top: 10%;
+  margin-top: 5%;
 }
 .formcard {
   display: grid;

@@ -1,7 +1,8 @@
-<ol>
+<div>
   <% @followers.each do |user| %>
-    <li>
+    <div class="user-container">
+      <i class="fas fa-plus-circle follow-btn"></i>
       <%= user.handle %>
-    </li>
+    </div>
   <% end %>
-</ol>
+<div>

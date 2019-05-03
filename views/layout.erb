@@ -2,47 +2,102 @@
 <html>
 <head>
   <link rel="stylesheet" href="<%= url('/main.css') %>">
-  <script src="<%= url('/index.js') %>"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
-  <div class="page-container">
-    <div class="top-nav">
-      <div class="app-name nav-btn">
-        nanoTwitter
+  <div class="top-nav">
+    <div id="profile-icon-wrapper" class="top-item">
+      <i id="profile-icon" class="fas fa-user-circle"></i>
+      <div id="username-display">
+        Welcome back, <%= @current_user %>!
       </div>
-      <i class="fas fa-feather nav-btn" id="new-tweet"></i>
-      <%# <img src="feather.svg" class="fas fa-feather nav-btn" id="new-tweet" /> %>
     </div>
-    <div class="side-nav">
-      <a href="/users/profile">
-        <div class="side-nav-item">
-          Profile
-        </div>
-      </a>
-      <a href="/tweets">
-        <div class="side-nav-item">
-          Timeline
-        </div>
-      </a>
-      <a href="/users/followers">
-        <div class="side-nav-item">
-          Followers
-        </div>
-      </a>
-      <a href="/users/following">
-        <div class="side-nav-item">
-          Following
-        </div>
-      </a>
-      <a href="">
-        <div class="side-nav-item">
-          Mentions
-        </div>
-      </a>
+    <div id="search-container" class="top-item">
+      <div id="search-input" contenteditable="true" spellcheck="false">Search...</div>
     </div>
-    <div class="main-container">
-      <%= yield %>
-    </div>
+    <div class="top-item" id="app-title">NanoTwitter</div>
+    <div class="top-item"></div>
+    <div class="top-item"></div>
+    <i id="logout-icon" class="fas fa-sign-out-alt"></i>
+  </div>
+  <div class="left-nav">
+    <div class="left-item" id="timeline">Timeline</div>
+    <div class="left-item" id="followers">Followers</div>
+    <div class="left-item" id="following">Following</div>
+    <div class="left-item" id="follow-more">Follow More</div>
+  </div>
+  <div class="content-window">
+    <%= yield %>
   </div>
 </body>
+<script>
+  $(document).ready(function() {
+
+    curr_user_handle = "@" + $("#username-display").text().trim().slice(14, -1);
+
+    if (window.location.pathname === "/uisearch"){
+      $(".tweet-signature").prepend("<i class=\"fas fa-plus-circle follow-btn\"></i>");
+    }
+
+    input_field = $("#search-input");
+    input_field.focus( () => input_field.text(''))
+    input_field.blur( () => input_field.text('Search...'))
+    input_field.on('keypress',function(e) {
+      if(e.which == 13) {
+          token = input_field.text().toLowerCase();
+          input_field.blur();
+          window.location.href = `/uisearch?token=${token}`
+      }
+    });
+
+    $(".tweet-signature").click( function(){
+      followee_handle = this.innerText;
+      $.post( "/users/follow", {followee_handle: followee_handle});
+    });
+
+    $(".followable").click( function(){
+      followee_handle = this.innerText;
+      $.post( "/users/follow", {followee_handle: followee_handle});
+    });
+
+    $("#post-btn").click( function(){
+      tweet_body = $("#new-tweet-textarea").val();
+      if (tweet_body === '') return ;
+      $.post( "/tweets/new", {tweet_body: tweet_body});
+      $("#new-tweet-textarea").val('');
+      html_str = `<div class="tweet-container"><div class="tweet-body">${tweet_body}</div><div class="tweet-signature">${curr_user_handle}</div><div class="tweet-created">${new Date().toLocaleString()}</div></div>`;
+      $(html_str).insertBefore($(".tweet-container").first());
+    });
+
+    $(".unfollow-btn").click( function() {
+      user_card = $(this).parent();
+      $.post( "/users/unfollow", {unfollow_handle: user_card.text().trim()} );
+      user_card.remove();
+    });
+
+    $(".follow-btn").click( function() {
+      user_card = $(this).parent();
+      $.post( "/users/follow", {followee_handle: user_card.text().trim()} );
+    });
+
+    $("#nxt-page-btn").click( function() {
+      if (window.location.pathname === "/uisearch"){
+        token = window.location.search.split("=")[1];
+        console.log(token);
+      }
+    });
+
+    $("#profile-icon").click( () =>  window.location.href = "/users/profile");
+
+    $("#timeline").click( () => window.location.href = "/");
+
+    $("#followers").click( () => window.location.href = "/users/followers");
+
+    $("#following").click( () => window.location.href = "/users/following");
+
+    $("#follow-more").click( () => window.location.href = "/users/following");
+
+    $("#logout-icon").click( () => window.location.href = "/login");
+  });
+</script>

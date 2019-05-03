@@ -8,7 +8,7 @@ enable :sessions
 
 # Sets local env configurations if applicable
 unless Sinatra::Base.production?
-  set :port, ARGV[0].to_i
+  set :port, ARGV[0].to_i.zero? ? 4567 : ARGV[0].to_i
   require 'dotenv'
   Dotenv.load 'config/local_vars.env'
   require 'pry-byebug'
