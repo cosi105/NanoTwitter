@@ -82,15 +82,3 @@ end
 def publish_cache_purge
   %w[searcher timeline_data tweet_html].each { |s| blank_publish("cache.purge.#{s}") }
 end
-
-# Flush everything before seeding
-[REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
-
-puts 'Starting seeding...'
-purge_all_queues
-purge_all_local_caches
-publish_cache_purge
-publish_timeline_data_seed
-publish_follow_data_seed
-cache_user_data_seed
-puts 'Finished seeding!'
