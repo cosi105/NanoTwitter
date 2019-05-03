@@ -1,0 +1,8 @@
+<div>
+  <% @follows.each do |user| %>
+    <div class="user-container">
+      <i class=<%="\"fas fa-#{@action == 'follow' ? 'plus' : 'minus'}-circle #{@action}-btn\""%>></i>
+      <%= user %>
+    </div>
+  <% end %>
+<div>
