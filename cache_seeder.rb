@@ -83,9 +83,6 @@ def publish_cache_purge
   %w[searcher timeline_data tweet_html].each { |s| blank_publish("cache.purge.#{s}") }
 end
 
-# ping_apps
-# Thread.new { caffeinate_apps }
-
 # Flush everything before seeding
 [REDIS_FOLLOW_DATA, REDIS_FOLLOW_HTML, REDIS_SEARCH_HTML, REDIS_TIMELINE_HTML, REDIS_USER_DATA].each(&:flushall)
 
