@@ -102,3 +102,8 @@ end
 def purge_all_queues
   %w[new_tweet.tweet_data new_follow.user_data new_follow.timeline_data timeline.data.seed.tweet_html timeline.data.seed.timeline_data searcher.data.seed new_tweet.tweet_data follow.data.seed new_tweet.follower_ids searcher.html new_follow.sorted_tweets].each { |name| CHANNEL.queue(name).purge }
 end
+
+def publish_cache_purges
+  queues = %w[searcher timeline_data tweet_html follow_data]
+  queues.each { |s| blank_publish("cache.purge.#{s}") }
+end

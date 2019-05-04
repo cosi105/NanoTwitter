@@ -43,7 +43,7 @@ echo "Redis servers up and running!"
 
 sleep 10
 
-for i in follow_data searcher timeline_data tweet_html nanotwitter
+for i in follow_data searcher timeline_data tweet_html #nanotwitter
 do
     cd ../$i
     ruby app.rb &
