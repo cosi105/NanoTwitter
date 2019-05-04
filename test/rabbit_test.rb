@@ -1,12 +1,10 @@
 describe 'RabbitMQ' do
 
   it 'can publish a new tweet' do
-    current_time = DateTime.now.in_time_zone('UTC')
     new_tweet = {
       author_id: @ari.id,
       author_handle: @ari.handle,
       body: 'Scalability is the best!',
-      created_on: current_time
     }
     create_and_publish_tweet(new_tweet)
     sleep 3
@@ -14,9 +12,8 @@ describe 'RabbitMQ' do
     t.author_id.must_equal @ari.id
     t.author_handle.must_equal @ari.handle
     t.body.must_equal 'Scalability is the best!'
-    t.created_on.must_equal current_time
 
-    REDIS_SEARCH_HTML.lrange('scalability', 0, -1).must_equal ["<div class=\"tweet-container\"><div class=\"tweet-body\">Scalability is the best!</div><div class=\"tweet-signature\">#{@ari.handle}</div><div class=\"tweet-created\">#{current_time.strftime("%-m/%-d/%Y %-l:%M %p")}</div></div>"]
+    REDIS_SEARCH_HTML.lrange('scalability', 0, -1).count.must_equal 1
   end
 
   it 'can publish a new follow' do
@@ -76,7 +73,6 @@ describe 'RabbitMQ' do
     rabbit_new_tweet_db_timelines(JSON.parse(new_tweet.to_json))
     sleep 3
     TimelinePiece.where(timeline_owner_id: @brad.id, tweet_id: t.id).count.must_equal 1
-      
   end
 
 end
