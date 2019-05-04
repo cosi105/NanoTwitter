@@ -1,0 +1,12 @@
+[submodule "searcher"]
+	path = searcher
+	url = https://github.com/cosi105/searcher.git
+[submodule "timeline_data"]
+	path = timeline_data
+	url = https://github.com/cosi105/timeline_data.git
+[submodule "follow_data"]
+	path = follow_data
+	url = https://github.com/cosi105/follow_data.git
+[submodule "tweet_html"]
+	path = tweet_html
+	url = https://github.com/cosi105/tweet_html.git

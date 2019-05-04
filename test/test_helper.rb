@@ -9,9 +9,6 @@ require 'minitest/autorun'
 require_relative '../app'
 ENV['PGDATABASE'] = ActiveRecord::Base.subclasses.first.connection.current_database
 
-# Define file path pattern for identifying test files:
-test_pattern = 'test/*_test.rb'
-
 def app
   Sinatra::Application
 end
@@ -19,11 +16,17 @@ end
 describe 'NanoTwitter' do
   include Rack::Test::Methods
   before do
-    delete_all
+    ActiveRecord::Base.subclasses.each(&:delete_all)
+    purge_all_queues
+    publish_cache_purges
+    purge_all_local_caches
     names = %w[ari brad yang pito]
-    users = names.map { |s| User.create(name: s.capitalize, handle: "@#{s}", password: "#{s}123") }
+    users = names.map { |s| User.create(name: s.capitalize, handle: "@#{s}", password: "@#{s}") }
     @ari, @brad, @yang, @pito = users
   end
-
-  Dir["#{ENV['APP_ROOT']}/#{test_pattern}"].each { |file| require file }
+  # Define file path pattern for identifying test files:
+  Dir['test/*_test.rb'].each do |file|
+    file.slice!(0..(file.index('/')))
+    require_relative file
+  end
 end
