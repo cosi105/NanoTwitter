@@ -36,8 +36,18 @@
 
     curr_user_handle = "@" + $("#username-display").text().trim().slice(14, -1);
 
-    if (window.location.pathname === "/uisearch"){
+    curr_path = window.location.pathname
+    if (curr_path === "/uisearch"){
       $(".tweet-signature").prepend("<i class=\"fas fa-plus-circle follow-btn\"></i>");
+    } else {
+      $(".user-container").each( function() {
+        curr = $(this);
+        if (curr_path === "/users/followers") {
+          $(this).html("<i class=\"fas fa-plus-circle follow-btn\"></i>"+curr.text());
+        } else {
+          $(this).html("<i class=\"fas fa-minus-circle unfollow-btn\"></i>"+curr.text());
+        }
+      });
     }
 
     input_field = $("#search-input");
