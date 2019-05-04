@@ -43,8 +43,13 @@ echo "Redis servers up and running!"
 
 sleep 10
 
-for i in follow_data searcher timeline_data tweet_html #nanotwitter
+rake db:drop db:create db:dump:seed
+
+for i in follow_data searcher timeline_data tweet_html nanotwitter
 do
     cd ../$i
     ruby app.rb &
 done
+
+sleep 5
+ruby cache_seeder.rb
