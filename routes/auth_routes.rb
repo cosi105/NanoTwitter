@@ -26,8 +26,8 @@ end
 post '/login' do
   user = login(params)
   if user.nil?
-    redirect '/login', 401
+    redirect '/login'
   else
-    redirect '/', 200
+    redirect '/'
   end
 end
