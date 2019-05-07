@@ -16,13 +16,14 @@ describe 'Integration Tests' do
   end
 
   it 'can log in' do
-    resp = post '/login', handle: '@ari', password: '@ari'
-    resp.status.must_equal 200
+    post '/login', handle: '@ari', password: '@ari'
+    resp = follow_redirect!
+    resp.body.include?('Welcome back, Ari!').must_equal true
   end
 
   it 'requires the correct password' do
-    resp = post '/login', handle: '@ari', password: '@ari2'
-    resp.status.must_equal 401
+    post '/login', handle: '@ari', password: '@ari2'
+    resp = follow_redirect!
+    resp.body.include?('Welcome back, Ari!').must_equal false
   end
-
 end
